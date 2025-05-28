@@ -11,12 +11,18 @@ indicating whether a passenger was satisfied with their flight experience. The
 original dataset and are used by both the script and the notebook.
 
 ## Setup
+The `setup.sh` script installs the required Python packages automatically when the Codex environment starts. You can also run it manually:
 
-Install the required Python packages with:
+```bash
+./setup.sh
+```
+
+If needed, you can install them directly with pip:
 
 ```bash
 pip install -r requirements.txt
 ```
+
 
 ## Running the script
 
@@ -51,7 +57,23 @@ The notebook follows these main steps:
 2. Split the data into training and test sets.
 3. Build a preprocessing and classification pipeline using `ColumnTransformer`
    and `LogisticRegression` from scikit-learn.
-4. Fit the model and evaluate it with accuracy and a classification report.
+4. Compare logistic regression and random forest models using five-fold cross
+   validation.
+5. Tune the regularization strength of the logistic regression with
+   `GridSearchCV`.
+6. Train the best model and evaluate it on the hold-out `test.csv` dataset.
+7. Save the trained model to `best_model.joblib` and demonstrate how to
+   generate predictions on new data.
 
 Executing each cell sequentially will reproduce the metrics shown in the
-notebook.
+notebook. A summary of the workflow and the answers to the project questions are
+available in `analysis_report.md`.
+
+## Generating predictions
+
+After training the model in the notebook you can use `predict_new.py` to generate predictions for a new CSV file:
+
+```bash
+python predict_new.py new_passengers.csv --model best_model.joblib
+```
+
