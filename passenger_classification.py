@@ -5,6 +5,7 @@
 
 import csv
 import math
+import argparse
 from collections import defaultdict, Counter
 
 # Columns treated as numerical features for the Gaussian part of the model
@@ -127,9 +128,14 @@ class NaiveBayes:
         return correct / len(data)
 
 def main():
+    parser = argparse.ArgumentParser(description="Naive Bayes passenger classifier")
+    parser.add_argument("--train", default="train.csv", help="Path to training CSV")
+    parser.add_argument("--test", default="test.csv", help="Path to test CSV")
+    args = parser.parse_args()
+
     # Load datasets
-    train_data = load_dataset("train.csv")
-    test_data = load_dataset("test.csv")
+    train_data = load_dataset(args.train)
+    test_data = load_dataset(args.test)
 
     # Compute basic descriptive statistics from the training data
     ages = [int(row["Age"]) for row in train_data]
